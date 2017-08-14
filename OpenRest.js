@@ -38,7 +38,7 @@ app.get('/openAt/:hh-:mm-:midi/:page', function (req, response) {
 		if(err)
 			response.send("Error while searching: " + err)
 		else {
-			if(req.params.page * 10 > res.hits.total) return response.send(`Only ${Math.floor(res.hits.total / 10)} pages exist for this query.`)
+			if(req.params.page * 10 > res.hits.total) return response.send(`Only ${Math.ceil(res.hits.total / 10)} pages exist for this query.`)
 			endpoint = (req.params.page * 10 + 10) <= res.hits.total ? (req.params.page * 10 + 10) : res.hits.total
 			out = `Showing ${req.params.page * 10} to ${endpoint} out of ${res.hits.total} restaurants open at ${req.params.hh}:${req.params.mm} ${req.params.midi}: <br><br>`
 			res.hits.hits.forEach((hit, index) => out += `${hit._source.name_en} <br>`)
