@@ -15,16 +15,16 @@ It then allows the user to query which restaurants are open at a given time.
 1. Download the latest stable version of ElasticSearch and extract it somewhere, then cd into that directory and execute it:
 <code> ./bin/elasticsearch </code>
 
-Now that you have an ElasticSearch server running, let's import the data from the CSV file to ElasticSearch.
+Now that you have an ElasticSearch server running, leave that terminal open, and let's import the data from the CSV file to ElasticSearch.
 
-2. Download the latest stable version of Logstash and extract it somewhere, then cd into that directory, create a file called csv.conf and paste the following into it:
+2. Download the latest stable version of Logstash and extract it somewhere, then fire up another terminal and cd into the directory where you extracted it, create a file called csv.conf and paste the following into it:
 
 <pre>
 input {
     file {
         path => ["/path/to/restaurants.csv"]
         start_position => "beginning"
-	      sincedb_path => "/dev/null"
+	sincedb_path => "/dev/null"
     }
 }
 
@@ -32,7 +32,7 @@ filter {
     csv {
          columns => [
             "id",
-	          "created_at",
+	    "created_at",
             "updated_at",
             "city_id",
             "opening_hr",
@@ -63,7 +63,7 @@ output {
         hosts => ["127.0.0.1:9200"]
         index => "restaurants"
         document_type => "restaurant"
-	      document_id => "%{id}"
+	document_id => "%{id}"
         workers => 1
     }
 }
@@ -71,13 +71,13 @@ output {
 
 Make sure to replace the path in the third line with the path to restaurants.csv on your PC.
 
-3. We're all set. Fire up another terminal and cd to the directory where you extracted Logstash and run the following command:
+3. We're all set. Make sure you're still in the directory where you extracted Logstash and run the following command:
 
 <code> ./bin/logstash -f csv.conf </code>
 
 Now ElasticSearch is ready for queries.
 
-4. git clone this repo to your PC, then cd into the directory and run the following command to install required dependencies:
+4. git clone this repo to your PC, then cd into the directory where you cloned it and run the following command to install the required dependencies:
 
 <code> npm install </code>
 
