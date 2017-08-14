@@ -69,7 +69,7 @@ output {
 }
 </pre>
 
-Make sure to replace the path in the third line with the path to restaurants.csv on your PC.
+Make sure to replace the path in the third line with the path to restaurants.csv on your PC, and remove the headers from the CSV file.
 
 3. We're all set. Make sure you're still in the directory where you extracted Logstash and run the following command:
 

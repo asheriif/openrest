@@ -25,7 +25,8 @@ const constructBody = function constructBody(hh, mm, p, page) {
 		"from": page,
 		"query": {
 			"query_string": {
-				"query": "((opening_hr:<=" + myKey + ") AND (closing_hr:>=" + myKey + ")) OR ((closing_hr:<=opening_hr) AND (opening_hr:<=" + myKey + "))"
+				"query": "((opening_hr:<=" + myKey + ") AND (closing_hr:>=" + myKey + "))" +   //open for less than 12 hours
+				         " OR ((closing_hr:<=opening_hr) AND (opening_hr:<=" + myKey + "))"    //open for more than 12 hours
 			}
 		}
 	}
@@ -47,7 +48,6 @@ app.get('/openAt/:hh-:mm-:midi/:page', function (req, response) {
 })
 
 app.listen(port, function(err) {
-	if(err)
-		return console.log(err)
+	if(err) return console.log(err)
 	console.log(`Server up and running. Listening on port: ${port}`)
 })
